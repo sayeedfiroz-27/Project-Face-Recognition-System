@@ -45,3 +45,19 @@ python3 src/03_recognize_and_attendance.py
 - `trainer/` stores trained model and user mapping.
 - `attendance/` stores attendance CSV files.
 - `results/` stores recognition screenshots.
+
+## Important Image and Data Path Notes
+
+Real face images are not included in this GitHub repository for privacy. When you run `python3 src/01_capture_images.py`, the project automatically creates user image folders like `dataset/1_Rahul/` and saves captured face images as `1.jpg`, `2.jpg`, `3.jpg`, and so on.
+
+Generated project files:
+
+```text
+dataset/1_Rahul/1.jpg
+trainer/face_model.yml
+trainer/labels.txt
+attendance/attendance_YYYY-MM-DD.csv
+results/Rahul_HHMMSS.jpg
+```
+
+For the detailed classroom notes, open `index.html` or read `face_recognition_system_notes.md`.

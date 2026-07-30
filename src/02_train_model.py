@@ -7,9 +7,18 @@ DATASET_DIR = Path("dataset")
 TRAINER_DIR = Path("trainer")
 MODEL_PATH = TRAINER_DIR / "face_model.yml"
 LABELS_PATH = TRAINER_DIR / "labels.txt"
+FACE_SIZE = (200, 200)
 
 
 TRAINER_DIR.mkdir(exist_ok=True)
+
+if not DATASET_DIR.exists():
+    print("Dataset folder not found. Please run 01_capture_images.py first.")
+    raise SystemExit(1)
+
+if not hasattr(cv2, "face"):
+    print("cv2.face module not found. Please install opencv-contrib-python.")
+    raise SystemExit(1)
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 
@@ -32,6 +41,7 @@ for user_folder in DATASET_DIR.iterdir():
         if face_image is None:
             continue
 
+        face_image = cv2.resize(face_image, FACE_SIZE)
         faces.append(face_image)
         labels.append(user_id)
 

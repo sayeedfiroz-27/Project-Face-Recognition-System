@@ -4,6 +4,7 @@ from pathlib import Path
 
 DATASET_DIR = Path("dataset")
 CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+FACE_SIZE = (200, 200)
 
 
 DATASET_DIR.mkdir(exist_ok=True)
@@ -16,6 +17,14 @@ user_folder.mkdir(exist_ok=True)
 
 face_detector = cv2.CascadeClassifier(CASCADE_PATH)
 camera = cv2.VideoCapture(0)
+
+if face_detector.empty():
+    print("Face detector could not be loaded. Please check OpenCV installation.")
+    raise SystemExit(1)
+
+if not camera.isOpened():
+    print("Camera could not be opened. Please check webcam permission or camera index.")
+    raise SystemExit(1)
 
 image_count = 0
 max_images = 50
@@ -42,6 +51,7 @@ while True:
         image_count += 1
 
         face_image = gray_frame[y:y + h, x:x + w]
+        face_image = cv2.resize(face_image, FACE_SIZE)
         image_path = user_folder / f"{image_count}.jpg"
         cv2.imwrite(str(image_path), face_image)
 

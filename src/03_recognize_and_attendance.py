@@ -10,6 +10,7 @@ RESULTS_DIR = Path("results")
 MODEL_PATH = TRAINER_DIR / "face_model.yml"
 LABELS_PATH = TRAINER_DIR / "labels.txt"
 CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+FACE_SIZE = (200, 200)
 
 
 ATTENDANCE_DIR.mkdir(exist_ok=True)
@@ -27,11 +28,23 @@ with LABELS_PATH.open("r") as file:
         user_id, user_name = line.strip().split(",", 1)
         labels[int(user_id)] = user_name
 
+if not hasattr(cv2, "face"):
+    print("cv2.face module not found. Please install opencv-contrib-python.")
+    raise SystemExit(1)
+
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read(str(MODEL_PATH))
 
 face_detector = cv2.CascadeClassifier(CASCADE_PATH)
 camera = cv2.VideoCapture(0)
+
+if face_detector.empty():
+    print("Face detector could not be loaded. Please check OpenCV installation.")
+    raise SystemExit(1)
+
+if not camera.isOpened():
+    print("Camera could not be opened. Please check webcam permission or camera index.")
+    raise SystemExit(1)
 
 attendance_file = ATTENDANCE_DIR / f"attendance_{datetime.now().date()}.csv"
 marked_users = set()
@@ -55,6 +68,7 @@ while True:
 
     for (x, y, w, h) in faces:
         face_image = gray_frame[y:y + h, x:x + w]
+        face_image = cv2.resize(face_image, FACE_SIZE)
         user_id, confidence = recognizer.predict(face_image)
 
         if confidence < 70:
