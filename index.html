@@ -1,91 +1,218 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Face Recognition System Project</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Face Recognition System Project Notes</title>
   <style>
+    :root {
+      --bg: #f5f7fb;
+      --paper: #ffffff;
+      --text: #1f2937;
+      --muted: #5b6472;
+      --border: #dbe2ea;
+      --accent: #0f766e;
+      --code-bg: #111827;
+      --code-text: #e5e7eb;
+      --table-head: #ecfdf5;
+    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f6f7fb;
-      color: #182033;
-      line-height: 1.75;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.72;
     }
-    header {
+    .topbar {
       background: #111827;
       color: white;
-      padding: 34px 8%;
+      padding: 18px 24px;
+      border-bottom: 4px solid var(--accent);
+    }
+    .topbar-inner, main {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+    .topbar h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.3;
+    }
+    .topbar p {
+      margin: 6px 0 0;
+      color: #d1d5db;
+      font-size: 15px;
     }
     main {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 28px 20px 60px;
+      margin-top: 28px;
+      padding: 0 18px 48px;
     }
-    section {
-      background: white;
-      border: 1px solid #d9e0ec;
+    .layout {
+      display: grid;
+      grid-template-columns: 295px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+    .doc-selector {
+      position: sticky;
+      top: 18px;
+      display: grid;
+      gap: 14px;
+    }
+    .doc-card {
+      appearance: none;
+      width: 100%;
+      min-height: 130px;
+      border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 24px;
-      margin: 18px 0;
-    }
-    code {
-      background: #edf1f7;
-      color: #182033;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-    pre {
-      background: #101827;
-      color: #f8fbff;
+      background: var(--paper);
+      color: var(--text);
+      cursor: pointer;
       padding: 18px;
+      text-align: left;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+    }
+    .doc-card:hover, .doc-card:focus {
+      border-color: var(--accent);
+      outline: none;
+    }
+    .doc-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.16);
+    }
+    .doc-card strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .doc-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    article {
+      background: var(--paper);
+      border: 1px solid var(--border);
       border-radius: 8px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+    h1, h2, h3, h4 { line-height: 1.25; color: #111827; }
+    h1 {
+      font-size: 34px;
+      margin-top: 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    h2 { margin-top: 34px; font-size: 25px; }
+    h3 { margin-top: 26px; font-size: 20px; }
+    h4 { margin-top: 22px; font-size: 17px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      display: block;
       overflow-x: auto;
     }
-    pre code {
-      background: transparent;
-      color: #f8fbff;
-      padding: 0;
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--table-head); font-weight: 700; }
+    code {
+      background: #eef2f7;
+      border-radius: 4px;
+      padding: 2px 5px;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      font-size: 0.95em;
+    }
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+    }
+    pre code { background: transparent; color: inherit; padding: 0; }
+    blockquote {
+      border-left: 4px solid var(--accent);
+      margin: 16px 0;
+      padding: 8px 16px;
+      background: #ecfdf5;
+      color: var(--muted);
+    }
+    hr { border: 0; border-top: 1px solid var(--border); margin: 28px 0; }
+    .viewer-heading, .loading, .error { color: var(--muted); font-size: 16px; }
+    .error { color: #b91c1c; }
+    @media (max-width: 760px) {
+      .layout { grid-template-columns: 1fr; }
+      .doc-selector { position: static; }
+      article { padding: 18px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Face Recognition System Project</h1>
-    <p>Step-by-step classroom project using Python, OpenCV, Machine Learning, Webcam Capture, Recognition, Attendance and Result Saving.</p>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1>Face Recognition System Project - OpenCV & Machine Learning Notes</h1>
+      <p>Simple Hinglish classroom notes with topic explanation, project build steps, practical code, attendance system, and line-by-line explanation</p>
+    </div>
   </header>
   <main>
-    <section>
-      <h2>Project Purpose</h2>
-      <p>Is project ka purpose students ko real-world computer vision workflow samjhana hai. Hum face detect karenge, webcam se images capture karenge, model train karenge, registered users ko identify karenge, attendance mark karenge aur results save karenge.</p>
-      <p>Notes ko Day 1/Day 2 style me banaya gaya hai: pehle har topic detail me explain hai, phir us topic se related project step build hota hai, phir code diya hai, aur phir har line ka simple Hinglish explanation diya hai.</p>
-      <p>Full detailed notes with every topic, code and line-by-line explanation are available in <code>face_recognition_system_notes.md</code>.</p>
-    </section>
-    <section>
-      <h2>Teaching Flow</h2>
-      <p>Step 1: Face Detection using OpenCV samjhao.</p>
-      <p>Step 2: Webcam se registered user ke face images capture karna samjhao.</p>
-      <p>Step 3: Captured images se LBPH face recognition model train karna samjhao.</p>
-      <p>Step 4: Real-time webcam recognition aur registered user identification samjhao.</p>
-      <p>Step 5: Attendance CSV me user ID, name aur time save karna samjhao.</p>
-      <p>Step 6: Recognition result screenshot save karna samjhao.</p>
-    </section>
-    <section>
-      <h2>Install</h2>
-      <pre><code>python3 -m pip install -r requirements.txt</code></pre>
-    </section>
-    <section>
-      <h2>Run Step by Step</h2>
-      <pre><code>python3 src/01_capture_images.py
-python3 src/02_train_model.py
-python3 src/03_recognize_and_attendance.py</code></pre>
-    </section>
-    <section>
-      <h2>Project Files</h2>
-      <p><code>src/01_capture_images.py</code> captures user face images from webcam.</p>
-      <p><code>src/02_train_model.py</code> trains the LBPH face recognition model.</p>
-      <p><code>src/03_recognize_and_attendance.py</code> recognizes registered users and marks attendance.</p>
-    </section>
+    <div class="layout">
+      <section class="doc-selector" aria-label="Choose project document">
+        <button class="doc-card" type="button" data-doc="notes">
+          <strong>Project Notes</strong>
+          <span>Face detection, webcam capture, model training, recognition, attendance, result saving, and detailed explanations.</span>
+        </button>
+        <button class="doc-card" type="button" data-doc="run">
+          <strong>Run Guide</strong>
+          <span>Install packages, run scripts step by step, and understand project folder structure.</span>
+        </button>
+      </section>
+      <article id="content">
+        <p class="loading">Choose Project Notes or Run Guide from the sidebar to open the document.</p>
+      </article>
+    </div>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    const content = document.getElementById("content");
+    const cards = Array.from(document.querySelectorAll(".doc-card"));
+    const documents = {
+      notes: { title: "Face Recognition System Project Notes", file: "face_recognition_system_notes.md" },
+      run: { title: "Face Recognition System Run Guide", file: "README.md" }
+    };
+    marked.setOptions({ gfm: true, breaks: false });
+    function setActiveCard(docKey) {
+      cards.forEach((card) => card.classList.toggle("active", card.dataset.doc === docKey));
+    }
+    function loadDocument(docKey) {
+      const selected = documents[docKey] || documents.notes;
+      setActiveCard(docKey);
+      content.innerHTML = `<p class="loading">Loading ${selected.title}...</p>`;
+      fetch(selected.file)
+        .then((response) => {
+          if (!response.ok) throw new Error("Notes file could not be loaded.");
+          return response.text();
+        })
+        .then((markdown) => {
+          content.innerHTML = `<p class="viewer-heading">Opened document: ${selected.title}</p>${marked.parse(markdown)}`;
+          window.location.hash = docKey;
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        })
+        .catch((error) => {
+          content.innerHTML = `<h1>Document could not be loaded</h1><p class="error">${error.message}</p>`;
+        });
+    }
+    cards.forEach((card) => card.addEventListener("click", () => loadDocument(card.dataset.doc)));
+    const initialDoc = window.location.hash.replace("#", "") || "notes";
+    loadDocument(documents[initialDoc] ? initialDoc : "notes");
+  </script>
 </body>
 </html>
