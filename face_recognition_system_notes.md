@@ -1,133 +1,32 @@
-# Face Recognition System Project
+# Project - Face Recognition System
 
-# Complete Step-by-Step Classroom Notes in Simple Hinglish
+## Topics Covered
 
-## Project Overview
+Face Detection using OpenCV, Capture Images from Webcam, Face Recognition using Machine Learning, Train Face Recognition Model, Identify Registered Users, Real-time Face Detection, Attendance Marking Basic, and Save Recognition Results.
 
-Is project me hum Python, OpenCV aur basic Machine Learning ka use karke ek **Face Recognition System** build karenge. Ye project step-by-step banega. Hum ek saath pura code nahi likhenge. Pehle har topic ko detail me samjhenge, phir us topic ka practical code likhenge, phir code ki har line ko simple Hinglish me explain karenge.
+Is project ka main goal hai students ko ek complete real-world Computer Vision project step by step build karwana. Hum ek saath complete code nahi likhenge. Pehle topic samjhenge, phir us topic ka project part build karenge, phir code likhenge, phir code ki har line ko detail me simple Hinglish me explain karenge.
 
-Is project ka final goal hai webcam se face detect karna, user ke face images capture karna, captured images se face recognition model train karna, registered user ko recognize karna, real-time webcam me user ka naam show karna, attendance mark karna, aur recognition result save karna.
+Teacher speaking flow: "Students, aaj hum Face Recognition System build karenge. Is project me webcam se face detect hoga, registered users ke face images capture honge, un images se model train hoga, phir system real-time camera me user ko identify karega, attendance mark karega, aur recognition result save karega. Hum isko part by part build karenge, taaki aapko sirf code nahi, pura project logic samajh aaye."
 
-Real-world story: Imagine karo ek classroom, office, coaching center ya lab hai. Wahan attendance manually lena time-consuming hota hai. Agar system automatically face detect karke registered student ya employee ko identify kare aur attendance save kare, to time save hota hai. Ye project isi idea ka beginner-friendly version hai.
-
-Important note: Face recognition real world me privacy-sensitive technology hai. Is project ko sirf learning, demo, classroom aur consent-based use ke liye banana chahiye. Kisi ka face data bina permission capture ya use nahi karna chahiye.
+Important privacy note: Face recognition sensitive technology hai. Is project ko sirf learning, classroom demo, aur consent-based practice ke liye use karna chahiye. Kisi ka face data bina permission capture ya use nahi karna chahiye.
 
 ---
 
-# Teacher Read-Aloud Master Notes
+# 1. Face Detection using OpenCV
 
-## Project Purpose - Ye Project Kyu Bana Rahe Hain?
+Face Detection ka matlab image ya video frame me face ka location find karna. Face detection sirf ye batata hai ki face kaha hai. Ye nahi batata ki face kis person ka hai. Agar camera frame me Rahul ka face hai, to face detection sirf rectangle draw karega; ye Rahul ko identify nahi karega. Identification ka kaam face recognition ka hota hai.
 
-Students, is project ka purpose sirf face recognition ka code chalana nahi hai. Is project ka actual purpose ye samajhna hai ki real-world computer vision project ka complete flow kaise work karta hai. Jab koi company ya institute face-based attendance system banata hai, to wo direct recognition se start nahi karta. Sabse pehle face detect hota hai, phir registered users ke face images collect hote hain, phir un images se model train hota hai, phir model real-time camera me face ko identify karta hai, phir attendance save hoti hai, aur end me result ka record maintain hota hai.
+OpenCV ek popular Computer Vision library hai. Computer Vision ka matlab computer ko images aur videos samjhana. OpenCV se hum webcam open kar sakte hain, image frames read kar sakte hain, image ko grayscale me convert kar sakte hain, face detect kar sakte hain, rectangle draw kar sakte hain, aur live video screen par show kar sakte hain.
 
-Is project me students ko ye samajhna hai ki har step ek dusre se connected hai. Agar face detection weak hai, to captured images weak hongi. Agar captured images weak hain, to model training weak hogi. Agar model training weak hai, to recognition wrong ho sakta hai. Isliye project ko step by step build karna important hai. Hum ek saath pura code nahi likhenge, kyunki students ko sirf copy-paste nahi, balki project ka logic samajhna hai.
+Is project me hum Haar Cascade face detector use karenge. Haar Cascade OpenCV ka pre-trained face detector hai. Pre-trained ka matlab ye already face patterns par trained hota hai. Hume face detection ke liye model ko manually train nahi karna. Hume sirf detector load karna hai aur webcam frame par use karna hai.
 
-Real-world me aise systems classroom attendance, office entry, lab access, library entry, exam verification, visitor management aur security monitoring me use ho sakte hain. Lekin students ko ye bhi samjhana zaroori hai ki face recognition privacy-sensitive technology hai. Kisi ka face data bina permission collect nahi karna chahiye. Learning purpose ke liye hamesha consent ke saath use karna chahiye.
+Real-world use case: Face detection CCTV monitoring, camera apps, attendance systems, entry systems, photo tagging, and video analytics me first step hota hai. Face recognition se pehle face detection zaroori hota hai.
 
-## Topic 1 - Face Detection using OpenCV
+## Project Build Part 1 - Webcam se Face Detect Karna
 
-Face Detection ka matlab hota hai image ya video frame ke andar face ka location find karna. Yahan system ko ye nahi pata hota ki face Rahul ka hai, Priya ka hai, ya kisi aur ka. System sirf ye identify karta hai ki image me face kaha present hai. Face detection recognition se pehle ka step hai. Agar face detect hi nahi hoga, to recognition possible nahi hoga.
+Is part me hum webcam open karenge, har frame read karenge, frame ko grayscale me convert karenge, face detect karenge, aur detected face ke around rectangle draw karenge. Ye project ka foundation hai.
 
-OpenCV ek computer vision library hai. Computer vision ka matlab computer ko image aur video samjhana. OpenCV se hum webcam open kar sakte hain, frames read kar sakte hain, image ko grayscale me convert kar sakte hain, face detect kar sakte hain, rectangle draw kar sakte hain, aur screen par live output dikha sakte hain.
-
-Is project me hum Haar Cascade use karenge. Haar Cascade OpenCV ka pre-trained face detector hai. Pre-trained ka matlab ye already face patterns par trained hai. Hume face detector ko manually train nahi karna. Hum sirf us detector ko load karenge aur webcam frames me faces detect karenge.
-
-Students ko yahan ye clear karna hai: detection ka kaam hai face kaha hai ye batana. Recognition ka kaam hai face kis person ka hai ye batana. Dono alag concepts hain.
-
-## Topic 2 - Capture Images from Webcam
-
-Face recognition model ko kisi person ko identify karna sikhane ke liye us person ke face images chahiye. Isliye hum webcam se registered user ke multiple face images capture karenge. Har user ka alag folder banega. Example: `dataset/1_Rahul`, `dataset/2_Priya`.
-
-Multiple images isliye capture karte hain kyunki real life me face hamesha same angle me nahi hota. Kabhi user thoda left dekhta hai, kabhi right, kabhi light kam hoti hai, kabhi expression change hota hai. Agar model ko sirf ek image milegi, to model user ka face robustly learn nahi kar paayega. Isliye beginner project me bhi 30-50 images lena better hota hai.
-
-Is step ka goal hai clean face dataset banana. Dataset ke bina model train nahi hoga. Isliye image capture project ka data collection step hai. Data collection real ML project ka bahut important part hota hai.
-
-## Topic 3 - Face Recognition using Machine Learning
-
-Face Recognition ka matlab detected face ko identify karna. Jab webcam me face detect hota hai, to system us face ko trained model ke paas bhejta hai. Model compare karta hai ki ye face registered users me se kis user ke face pattern se match karta hai.
-
-Is project me hum OpenCV ka LBPH Face Recognizer use karenge. LBPH ka full form Local Binary Patterns Histograms hai. Simple words me, ye face ke texture aur pattern ko numbers me represent karta hai. Phir new face aane par ye trained face patterns se compare karta hai.
-
-Students ko yahan ye samjhana hai ki model face ko human ki tarah nahi dekhta. Model image ko pixels aur patterns ki form me dekhta hai. Machine Learning model data se patterns learn karta hai, aur phir new input par prediction karta hai.
-
-## Topic 4 - Train Face Recognition Model
-
-Training ka matlab model ko examples se learning karwana. Humare paas dataset folder me face images hongi. Har image ke saath ek label hoga, jaise user ID 1, user ID 2. Model images aur labels ko dekhkar learn karega ki kis face pattern ka relation kis user ID se hai.
-
-Training ke baad model file save hoti hai, jaise `trainer/face_model.yml`. Ye file model ki learned knowledge store karti hai. Jab recognition script run hoga, wo model file load karega aur real-time face identify karega.
-
-Students ko ye point samjhao: training ke bina recognition possible nahi hai. Pehle data collect hoga, phir model train hoga, phir recognition hoga.
-
-## Topic 5 - Identify Registered Users
-
-Registered user ka matlab wo user jiska face dataset me capture hua hai aur jiske images se model trained hua hai. Jab registered user camera ke saamne aata hai, model us face ko predict karta hai aur user ID return karta hai. User ID se hum user name find karte hain.
-
-Model confidence score bhi return karta hai. LBPH me lower confidence generally better match hota hai. Is project me hum threshold use karenge, jaise confidence 70 se kam hai to user recognized. Agar confidence high hai to Unknown show hoga. Threshold real project me testing ke according adjust hota hai.
-
-## Topic 6 - Real-time Face Detection
-
-Real-time ka matlab live webcam frames par continuously processing karna. Webcam ek second me many frames deta hai. Hum loop ke andar har frame read karte hain, face detect karte hain, model se predict karte hain, rectangle draw karte hain, aur result screen par show karte hain.
-
-Students ko yahan loop ka concept samjhana hai. `while True` ka matlab program continuous chalta rahega jab tak user `q` press karke stop na kare. Ye live application ka base pattern hai.
-
-## Topic 7 - Attendance Marking Basic
-
-Attendance marking ka matlab recognized user ka record CSV file me save karna. Hum user ID, user name aur current time save karenge. Isse attendance file banegi, jaise `attendance/attendance_2026-07-30.csv`.
-
-Duplicate attendance avoid karne ke liye hum `marked_users` set use karenge. Agar user already marked hai, to same session me dobara attendance row add nahi hogi. Ye basic attendance logic hai.
-
-## Topic 8 - Save Recognition Results
-
-Recognition result save karna useful hai kyunki later proof ke roop me screenshot dekha ja sakta hai. Jab user recognized hota hai, system current frame ko `results/` folder me image ke form me save kar sakta hai.
-
-Isse students ko logging ka concept samajh aata hai. Real applications me sirf output screen par dikhana enough nahi hota. Result ka record save karna bhi important hota hai.
-
----
-
-# Topics Covered
-
-Is project me hum ye topics cover karenge:
-
-- Face Detection using OpenCV
-- Capture Images from Webcam
-- Face Recognition using Machine Learning
-- Train Face Recognition Model
-- Identify Registered Users
-- Real-time Face Detection
-- Attendance Marking Basic
-- Save Recognition Results
-
----
-
-# Project Folder Structure
-
-Project me folders ka role samajhna important hai:
-
-`src/` folder me Python code files rahengi.  
-`dataset/` folder me captured face images save hongi.  
-`trainer/` folder me trained face recognition model save hoga.  
-`attendance/` folder me attendance CSV files save hongi.  
-`results/` folder me recognized user ke screenshots save honge.
-
-Ye structure project ko organized rakhta hai. Agar sab kuch ek hi folder me daal denge to project messy ho jaayega. Real projects me folder organization bahut important hota hai.
-
----
-
-# Step 1 - Face Detection using OpenCV
-
-## Topic Explanation
-
-Face Detection ka matlab image ya webcam frame me face ka location find karna. Is step me system ye nahi batata ki face kis person ka hai. Ye sirf ye batata hai ki image me face kaha hai. Face detection recognition se pehle aata hai.
-
-OpenCV ek popular computer vision library hai. Computer vision ka matlab computer ko images aur videos samjhana. OpenCV ka use webcam access karne, image read karne, face detect karne, rectangle draw karne aur video window show karne ke liye hota hai.
-
-Hum Haar Cascade face detector use karenge. Haar Cascade OpenCV ka pre-trained face detection model hai. Pre-trained ka matlab ye already face detect karna seekh chuka hai. Hume isko from scratch train nahi karna padta.
-
-## Is Step Me Hum Kya Build Kar Rahe Hain?
-
-Is step me hum webcam start karenge, frame read karenge, frame ko grayscale me convert karenge, face detect karenge, aur detected face ke around rectangle draw karenge. Ye same logic image capture aur recognition dono me use hoga.
-
-## Practical Code
+## Practice Code 1 - Face Detection
 
 ```python
 import cv2
@@ -165,67 +64,55 @@ camera.release()
 cv2.destroyAllWindows()
 ```
 
-## Har Line Detail Explanation
+## Output
 
-`import cv2` OpenCV library import karta hai. OpenCV ka short module name `cv2` hota hai. Hum webcam access, face detection, image conversion aur rectangle draw karne ke liye OpenCV use kar rahe hain.
+```text
+Webcam window open hogi.
+Face detect hone par face ke around green rectangle show hoga.
+q press karne par webcam window close ho jayegi.
+```
 
-`CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"` Haar Cascade face detection XML file ka path banata hai. OpenCV ke andar pre-trained cascade files available hoti hain. Ye file frontal face detect karne ke liye use hoti hai.
+## Detailed Code Explanation
 
-`face_detector = cv2.CascadeClassifier(CASCADE_PATH)` Haar Cascade file ko load karke face detector object banata hai. Ye object later frames me faces detect karega.
-
-`camera = cv2.VideoCapture(0)` laptop ya computer ke default webcam ko start karta hai. `0` ka matlab default camera. Agar external camera use ho to kabhi-kabhi `1` use karna pad sakta hai.
-
-`while True:` infinite loop start karta hai. Webcam video continuous frames ka stream hota hai, isliye hume baar-baar frame read karna hota hai.
-
-`success, frame = camera.read()` webcam se ek frame read karta hai. `success` batata hai frame successfully mila ya nahi. `frame` actual image hoti hai.
-
-`if not success:` check karta hai agar frame receive nahi hua. Agar camera off hai ya permission issue hai to success false ho sakta hai.
-
-`print("Camera frame not received.")` error message print karta hai taaki user ko problem samajh aaye.
-
-`break` loop stop karta hai. Agar camera se frame hi nahi mil raha, to aage code chalana useful nahi hai.
-
-`gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)` color frame ko grayscale me convert karta hai. Haar Cascade generally grayscale image par faster aur better kaam karta hai.
-
-`faces = face_detector.detectMultiScale(...)` grayscale frame me faces detect karta hai. Output me face locations milti hain.
-
-`gray_frame` detector ko input image deta hai.
-
-`scaleFactor=1.2` image ko different scales par check karne ka control karta hai. Face camera se near ya far ho sakta hai, isliye scale check important hota hai.
-
-`minNeighbors=5` detection quality control karta hai. Higher value false detections kam kar sakti hai.
-
-`minSize=(80, 80)` minimum face size set karta hai. Isse bahut chhote noise areas face detect nahi honge.
-
-`for (x, y, w, h) in faces:` detected faces par loop chalata hai. Har face ka x position, y position, width aur height milta hai.
-
-`cv2.rectangle(...)` detected face ke around rectangle draw karta hai. `(0, 255, 0)` green color hai aur `2` line thickness hai.
-
-`cv2.imshow("Face Detection", frame)` webcam frame ko window me show karta hai.
-
-`if cv2.waitKey(1) & 0xFF == ord("q"):` keyboard key check karta hai. Agar user `q` press kare to loop stop hoga.
-
-`camera.release()` webcam resource ko release karta hai. Ye important cleanup step hai.
-
-`cv2.destroyAllWindows()` OpenCV ki windows close karta hai.
+| Line | Code | Explanation |
+|---|---|---|
+| 1 | `import cv2` | Ye line OpenCV library import karti hai. OpenCV webcam access, image processing, face detection, rectangle drawing, and video display ke liye use hoti hai. Agar OpenCV import nahi hoga to project ka computer vision part start hi nahi hoga. |
+| 3 | `CASCADE_PATH = ...` | Ye Haar Cascade XML file ka path banata hai. Ye file OpenCV ke andar already available hoti hai aur frontal face detect karne ke liye use hoti hai. |
+| 5 | `face_detector = cv2.CascadeClassifier(CASCADE_PATH)` | Ye face detector object create karta hai. Is object ka kaam webcam frame me face locations find karna hai. |
+| 6 | `camera = cv2.VideoCapture(0)` | Ye default webcam open karta hai. `0` ka matlab first/default camera. Agar external camera use ho to kabhi `1` use karna pad sakta hai. |
+| 8 | `while True:` | Ye infinite loop start karta hai. Webcam video continuous frames deta hai, isliye hume baar-baar frame read karna hota hai. |
+| 9 | `success, frame = camera.read()` | Ye webcam se ek frame read karta hai. `success` batata hai frame mila ya nahi, aur `frame` actual image hoti hai. |
+| 11 | `if not success:` | Ye check karta hai ki frame receive hua ya nahi. Agar camera permission issue ya camera off hai to success false ho sakta hai. |
+| 12 | `print(...)` | Agar frame nahi mila to user ko readable error message milta hai. |
+| 13 | `break` | Loop stop kar deta hai because frame ke bina face detection possible nahi. |
+| 15 | `gray_frame = cv2.cvtColor(...)` | Color frame ko grayscale me convert karta hai. Haar Cascade grayscale image par fast aur stable kaam karta hai. |
+| 17 | `faces = face_detector.detectMultiScale(...)` | Ye grayscale image me faces detect karta hai. Output me face coordinates milte hain. |
+| 18 | `gray_frame` | Detector ko grayscale image input di ja rahi hai. |
+| 19 | `scaleFactor=1.2` | Detector image ko different sizes par check karta hai because face camera se near ya far ho sakta hai. |
+| 20 | `minNeighbors=5` | Ye detection quality control karta hai. Isse false detection kam ho sakti hai. |
+| 21 | `minSize=(80, 80)` | Ye minimum face size set karta hai. Bahut chhote objects ko face nahi maana jayega. |
+| 24 | `for (x, y, w, h) in faces:` | Har detected face ke coordinates par loop chalata hai. `x`, `y` position hai, `w` width hai, `h` height hai. |
+| 25 | `cv2.rectangle(...)` | Detected face ke around green rectangle draw karta hai. `(0, 255, 0)` green color hai aur `2` border thickness hai. |
+| 27 | `cv2.imshow(...)` | Webcam frame ko screen par show karta hai. |
+| 29 | `cv2.waitKey(1) ...` | Keyboard key check karta hai. Agar user `q` press kare to loop stop hoga. |
+| 32 | `camera.release()` | Webcam resource release karta hai. Ye cleanup step important hai. |
+| 33 | `cv2.destroyAllWindows()` | OpenCV ki windows close karta hai. |
 
 ---
 
-# Step 2 - Capture Images from Webcam
+# 2. Capture Images from Webcam
 
-## Topic Explanation
+Face recognition model ko train karne ke liye registered users ke face images chahiye. Agar system ko Rahul ko recognize karna hai, to Rahul ke multiple face images capture karne padenge. Agar Priya ko recognize karna hai, to Priya ke images bhi capture karne padenge.
 
-Face recognition model ko train karne ke liye hume registered users ke face images chahiye. Isliye pehle hum webcam se user ke face images capture karenge. Har user ka separate folder banega, jisme us user ke multiple face images save honge.
+Multiple images isliye important hain kyunki face hamesha same nahi dikhta. Kabhi light change hoti hai, kabhi face angle change hota hai, kabhi expression change hota hai. Agar model ko sirf ek image milegi, to model weak learn karega. Isliye hum har user ke 50 face images capture karenge.
 
-Multiple images isliye chahiye kyunki face thoda left, right, up, down, light change, expression change ke saath different dikhta hai. Agar model ko sirf ek image milegi to recognition weak ho sakta hai. Is project me hum beginner level par 50 images capture karenge.
+Real-world use case: Attendance system me pehle students/employees ko register kiya jaata hai. Registration ke time unke face images capture hote hain. Ye captured images training data ban jaate hain.
 
-## Is Step Me Hum Kya Build Kar Rahe Hain?
+## Project Build Part 2 - Registered User ke Images Capture Karna
 
-Hum user se numeric ID aur name input lenge. Webcam start hoga. Face detect hoga. Detected face crop hoke grayscale image ke form me `dataset/userid_username/` folder me save hoga.
+Is part me hum user se numeric ID aur name input lenge. Phir user ke naam se folder banayenge. Webcam se face detect hoga, face crop hoga, aur cropped face image user folder me save hogi.
 
-## Full Script
-
-File: `src/01_capture_images.py`
+## Practice Code 2 - Capture User Images
 
 ```python
 import cv2
@@ -247,42 +134,36 @@ camera = cv2.VideoCapture(0)
 
 image_count = 0
 max_images = 50
-
-print("Camera started. Look at the camera.")
-print("Press q to stop early.")
 ```
 
-## Har Line Detail Explanation
+## Output
 
-`import cv2` OpenCV import karta hai. Webcam open karna, face detect karna, image save karna aur video window show karna OpenCV se hoga.
+```text
+Enter numeric user ID: 1
+Enter user name: Rahul
+dataset/1_Rahul folder create hoga.
+Webcam start hoga.
+```
 
-`from pathlib import Path` Path class import karta hai. File/folder path ko clean way me handle karne ke liye use hota hai.
+## Detailed Code Explanation
 
-`DATASET_DIR = Path("dataset")` dataset folder ka path store karta hai. Captured face images isi folder ke andar save hongi.
+| Line | Code | Explanation |
+|---|---|---|
+| 1 | `import cv2` | OpenCV import hota hai. Webcam, face detection, image crop, image save, and display ke liye OpenCV use hoga. |
+| 2 | `from pathlib import Path` | `Path` file and folder path ko clean way me handle karta hai. Isse folder create karna aur file path banana easy hota hai. |
+| 4 | `DATASET_DIR = Path("dataset")` | Dataset folder ka path define karta hai. Captured face images isi folder ke andar save hongi. |
+| 5 | `CASCADE_PATH = ...` | Haar Cascade detector file ka path define karta hai. Ye face detection ke liye required hai. |
+| 7 | `DATASET_DIR.mkdir(exist_ok=True)` | Dataset folder create karta hai. `exist_ok=True` ka matlab folder already exist kare to error nahi aayega. |
+| 9 | `user_id = input(...).strip()` | User se numeric ID input leta hai. `strip()` extra spaces remove karta hai. Ye ID training label ke roop me use hogi. |
+| 10 | `user_name = input(...).strip().replace(" ", "_")` | User ka name input leta hai. Space ko underscore me convert karta hai taaki folder name clean rahe. |
+| 12 | `user_folder = DATASET_DIR / f"{user_id}_{user_name}"` | User ke liye folder path banata hai. Example: `dataset/1_Rahul`. |
+| 13 | `user_folder.mkdir(exist_ok=True)` | User ka folder create karta hai. Isi folder me us user ke face images save hongi. |
+| 15 | `face_detector = cv2.CascadeClassifier(CASCADE_PATH)` | Haar Cascade face detector load karta hai. |
+| 16 | `camera = cv2.VideoCapture(0)` | Webcam start karta hai. |
+| 18 | `image_count = 0` | Captured images count karne ke liye counter start karta hai. |
+| 19 | `max_images = 50` | Maximum images limit set karta hai. Jab 50 images capture ho jayengi to capture stop hoga. |
 
-`CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"` Haar Cascade face detector file ka path banata hai.
-
-`DATASET_DIR.mkdir(exist_ok=True)` dataset folder create karta hai. `exist_ok=True` ka matlab agar folder pehle se exist karta hai to error nahi aayega.
-
-`user_id = input(...).strip()` user se numeric ID input leta hai. `strip()` extra spaces remove karta hai. ID model label ke roop me use hogi.
-
-`user_name = input(...).strip().replace(" ", "_")` user ka name input leta hai. Spaces ko underscore me convert karta hai taaki folder name clean rahe.
-
-`user_folder = DATASET_DIR / f"{user_id}_{user_name}"` specific user ke liye folder path banata hai. Example: `dataset/1_Rahul`.
-
-`user_folder.mkdir(exist_ok=True)` user ka folder create karta hai. Isi folder me images save hongi.
-
-`face_detector = cv2.CascadeClassifier(CASCADE_PATH)` face detector object create karta hai.
-
-`camera = cv2.VideoCapture(0)` webcam start karta hai.
-
-`image_count = 0` captured images ka counter start karta hai.
-
-`max_images = 50` maximum 50 images capture karne ka limit set karta hai.
-
-`print(...)` user ko instruction show karta hai ki camera start ho gaya aur `q` press karke stop kar sakte hain.
-
-## Capture Loop Code
+## Practice Code 3 - Capture Loop
 
 ```python
 while True:
@@ -306,51 +187,60 @@ while True:
         face_image = gray_frame[y:y + h, x:x + w]
         image_path = user_folder / f"{image_count}.jpg"
         cv2.imwrite(str(image_path), face_image)
+
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+    cv2.imshow("Capture Face Images", frame)
+
+    if cv2.waitKey(1) & 0xFF == ord("q"):
+        break
+
+    if image_count >= max_images:
+        break
+
+camera.release()
+cv2.destroyAllWindows()
 ```
 
-## Har Line Detail Explanation
+## Detailed Code Explanation
 
-`while True:` continuous loop start karta hai. Webcam se images continuously aati hain, isliye loop required hai.
-
-`success, frame = camera.read()` webcam se current frame read karta hai.
-
-`if not success:` check karta hai agar frame successfully read nahi hua.
-
-`print("Camera frame not received.")` problem message print karta hai.
-
-`break` loop stop karta hai.
-
-`gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)` frame ko grayscale me convert karta hai.
-
-`faces = face_detector.detectMultiScale(...)` grayscale frame me face locations detect karta hai.
-
-`for (x, y, w, h) in faces:` detected faces ke coordinates par loop chalata hai.
-
-`image_count += 1` saved image count ko 1 se increase karta hai.
-
-`face_image = gray_frame[y:y + h, x:x + w]` detected face area crop karta hai. Ye only face image banata hai, full frame nahi.
-
-`image_path = user_folder / f"{image_count}.jpg"` image save karne ka path banata hai.
-
-`cv2.imwrite(str(image_path), face_image)` cropped face image ko JPG file ke form me save karta hai.
+| Line | Code | Explanation |
+|---|---|---|
+| 1 | `while True:` | Continuous webcam loop start karta hai. Camera baar-baar frames deta hai. |
+| 2 | `success, frame = camera.read()` | Webcam se current frame read karta hai. |
+| 4 | `if not success:` | Check karta hai ki frame mila ya nahi. |
+| 5 | `print(...)` | Agar frame nahi mila to message show karta hai. |
+| 6 | `break` | Loop stop karta hai. |
+| 8 | `gray_frame = cv2.cvtColor(...)` | Frame ko grayscale me convert karta hai. |
+| 9 | `faces = face_detector.detectMultiScale(...)` | Frame me face locations detect karta hai. |
+| 17 | `for (x, y, w, h) in faces:` | Har detected face par loop chalata hai. |
+| 18 | `image_count += 1` | Captured image counter increase karta hai. |
+| 20 | `face_image = gray_frame[y:y + h, x:x + w]` | Face region crop karta hai. Full frame nahi, sirf face image save hogi. |
+| 21 | `image_path = user_folder / f"{image_count}.jpg"` | Image save karne ka file path create karta hai. |
+| 22 | `cv2.imwrite(str(image_path), face_image)` | Cropped face image ko JPG file me save karta hai. |
+| 24 | `cv2.rectangle(...)` | Face ke around rectangle draw karta hai taaki user ko detection dikhe. |
+| 26 | `cv2.imshow(...)` | Webcam output screen par show karta hai. |
+| 28 | `cv2.waitKey(...)` | User `q` press kare to capture stop hota hai. |
+| 31 | `if image_count >= max_images:` | Check karta hai kya 50 images capture ho chuki hain. |
+| 32 | `break` | Max images complete hone par loop stop karta hai. |
+| 34 | `camera.release()` | Webcam release karta hai. |
+| 35 | `cv2.destroyAllWindows()` | OpenCV windows close karta hai. |
 
 ---
 
-# Step 3 - Train Face Recognition Model
+# 3. Face Recognition using Machine Learning
 
-## Topic Explanation
+Face Recognition ka matlab detected face ko identify karna. Face Detection batata hai face kaha hai, Face Recognition batata hai face kis registered user ka hai. Recognition ke liye model ko training images chahiye hoti hain.
 
-Ab hum captured face images se model train karenge. Training ka matlab model ko registered users ke faces ke patterns sikhana. Is project me hum OpenCV ka **LBPH Face Recognizer** use karenge.
+Is project me hum OpenCV ka LBPH Face Recognizer use karenge. LBPH ka full form Local Binary Patterns Histograms hai. Simple words me, ye face ke local texture patterns ko numbers me convert karta hai. Jab new face aata hai, model us pattern ko trained faces ke patterns se compare karta hai.
 
-LBPH ka full form Local Binary Patterns Histograms hai. Simple words me, ye face image ke texture patterns ko learn karta hai. Beginner face recognition projects ke liye LBPH simple aur useful algorithm hai.
+Real-world use case: Face recognition attendance system, access control system, employee verification, smart door lock, and lab entry system me use ho sakta hai.
 
-## Is Step Me Hum Kya Build Kar Rahe Hain?
+## Project Build Part 3 - Training Data Read Karna
 
-Hum `dataset/` folder se images read karenge. Har user folder se user ID nikalenge. Images aur labels ko list me store karenge. Phir recognizer train karenge aur model `trainer/face_model.yml` me save karenge.
+Is part me hum `dataset/` folder se captured images read karenge. Folder name se user ID aur user name nikalenge. Images ko `faces` list me aur user IDs ko `labels` list me store karenge.
 
-## Full Script
-
-File: `src/02_train_model.py`
+## Practice Code 4 - Prepare Training Data
 
 ```python
 import cv2
@@ -371,33 +261,34 @@ labels = []
 label_names = {}
 ```
 
-## Har Line Detail Explanation
+## Detailed Code Explanation
 
-`import cv2` OpenCV import karta hai. LBPH recognizer OpenCV contrib package me available hota hai.
+| Line | Code | Explanation |
+|---|---|---|
+| 1 | `import cv2` | OpenCV import karta hai. LBPH face recognizer OpenCV contrib package se use hoga. |
+| 2 | `import numpy as np` | NumPy import karta hai. Labels ko numeric array me convert karne ke liye use hoga. |
+| 3 | `from pathlib import Path` | Folder/file paths handle karne ke liye Path import hota hai. |
+| 5 | `DATASET_DIR = Path("dataset")` | Captured face images folder ka path define karta hai. |
+| 6 | `TRAINER_DIR = Path("trainer")` | Trained model save karne wale folder ka path define karta hai. |
+| 7 | `MODEL_PATH = TRAINER_DIR / "face_model.yml"` | Trained model file ka path define karta hai. |
+| 8 | `LABELS_PATH = TRAINER_DIR / "labels.txt"` | User ID-name mapping save karne wali labels file ka path define karta hai. |
+| 10 | `TRAINER_DIR.mkdir(exist_ok=True)` | Trainer folder create karta hai agar exist nahi karta. |
+| 12 | `recognizer = cv2.face.LBPHFaceRecognizer_create()` | LBPH face recognizer object create karta hai. Ye model training and prediction ke liye use hoga. |
+| 14 | `faces = []` | Face images store karne ke liye empty list banata hai. |
+| 15 | `labels = []` | User IDs store karne ke liye empty list banata hai. |
+| 16 | `label_names = {}` | User ID aur user name mapping ke liye dictionary banata hai. |
 
-`import numpy as np` NumPy import karta hai. Labels ko numeric array me convert karne ke liye use hoga.
+---
 
-`from pathlib import Path` folder aur file paths manage karne ke liye import hota hai.
+# 4. Train Face Recognition Model
 
-`DATASET_DIR = Path("dataset")` captured images folder ka path store karta hai.
+Training ka matlab model ko examples se learning karwana. Humare examples hain captured face images. Har image ke saath user ID label hoga. Model face image aur user ID ka relation learn karega.
 
-`TRAINER_DIR = Path("trainer")` trained model save karne wale folder ka path store karta hai.
+Training ke baad model file save hogi: `trainer/face_model.yml`. Labels file bhi save hogi: `trainer/labels.txt`. Recognition ke time model file aur labels file dono load honge.
 
-`MODEL_PATH = TRAINER_DIR / "face_model.yml"` trained model file ka path define karta hai.
+## Project Build Part 4 - Images Read Karke Model Train Karna
 
-`LABELS_PATH = TRAINER_DIR / "labels.txt"` user ID aur user name mapping save karne wali file ka path define karta hai.
-
-`TRAINER_DIR.mkdir(exist_ok=True)` trainer folder create karta hai agar exist nahi karta.
-
-`recognizer = cv2.face.LBPHFaceRecognizer_create()` LBPH face recognizer object create karta hai.
-
-`faces = []` face images store karne ke liye empty list banata hai.
-
-`labels = []` user IDs store karne ke liye empty list banata hai.
-
-`label_names = {}` user ID aur user name mapping ke liye dictionary banata hai.
-
-## Training Data Reading Code
+## Practice Code 5 - Read Images and Train Model
 
 ```python
 for user_folder in DATASET_DIR.iterdir():
@@ -417,220 +308,81 @@ for user_folder in DATASET_DIR.iterdir():
 
         faces.append(face_image)
         labels.append(user_id)
-```
-
-## Har Line Detail Explanation
-
-`for user_folder in DATASET_DIR.iterdir():` dataset folder ke andar available user folders par loop chalata hai.
-
-`if not user_folder.is_dir():` check karta hai ki current item folder hai ya nahi.
-
-`continue` agar item folder nahi hai to usko skip karta hai.
-
-`folder_parts = user_folder.name.split("_", 1)` folder name ko ID aur name me split karta hai. Example: `1_Rahul` se `1` aur `Rahul`.
-
-`user_id = int(folder_parts[0])` folder name ka first part numeric user ID me convert karta hai.
-
-`user_name = ...` folder name se user name nikalta hai. Agar name available nahi hai to default name banata hai.
-
-`label_names[user_id] = user_name` dictionary me ID-name mapping store karta hai.
-
-`for image_path in user_folder.glob("*.jpg"):` user folder ke andar JPG images par loop chalata hai.
-
-`face_image = cv2.imread(..., cv2.IMREAD_GRAYSCALE)` image ko grayscale format me read karta hai.
-
-`if face_image is None:` check karta hai agar image read nahi hui.
-
-`continue` unreadable image ko skip karta hai.
-
-`faces.append(face_image)` face image list me add karta hai.
-
-`labels.append(user_id)` corresponding user ID label list me add karta hai.
-
-## Model Training and Saving Code
-
-```python
-if len(faces) == 0:
-    print("No training images found. Please run 01_capture_images.py first.")
-    raise SystemExit(1)
 
 recognizer.train(faces, np.array(labels))
 recognizer.write(str(MODEL_PATH))
-
-with LABELS_PATH.open("w") as file:
-    for user_id, user_name in label_names.items():
-        file.write(f"{user_id},{user_name}\n")
-
-print("Model training completed.")
 ```
 
-## Har Line Detail Explanation
+## Detailed Code Explanation
 
-`if len(faces) == 0:` check karta hai ki training ke liye images available hain ya nahi.
-
-`print(...)` user ko message deta hai ki pehle images capture karni hongi.
-
-`raise SystemExit(1)` program stop karta hai because training images ke bina model train nahi ho sakta.
-
-`recognizer.train(faces, np.array(labels))` LBPH recognizer ko faces aur labels se train karta hai.
-
-`np.array(labels)` labels list ko NumPy array me convert karta hai, jo recognizer ko required format me chahiye.
-
-`recognizer.write(str(MODEL_PATH))` trained model ko file me save karta hai.
-
-`with LABELS_PATH.open("w") as file:` labels file write mode me open karta hai.
-
-`for user_id, user_name in label_names.items():` dictionary ke ID-name pairs par loop chalata hai.
-
-`file.write(f"{user_id},{user_name}\n")` labels file me user ID aur name save karta hai.
-
-`print("Model training completed.")` training complete message show karta hai.
+| Line | Code | Explanation |
+|---|---|---|
+| 1 | `for user_folder in DATASET_DIR.iterdir():` | Dataset folder ke andar har user folder par loop chalata hai. |
+| 2 | `if not user_folder.is_dir():` | Check karta hai current item folder hai ya nahi. |
+| 3 | `continue` | Agar folder nahi hai to skip karta hai. |
+| 5 | `folder_parts = user_folder.name.split("_", 1)` | Folder name ko ID aur name me split karta hai. Example: `1_Rahul`. |
+| 6 | `user_id = int(folder_parts[0])` | Folder name ka first part numeric ID me convert karta hai. |
+| 7 | `user_name = ...` | Folder name se user name nikalta hai. Agar name missing ho to default name banata hai. |
+| 8 | `label_names[user_id] = user_name` | User ID aur name mapping dictionary me store karta hai. |
+| 10 | `for image_path in user_folder.glob("*.jpg"):` | User folder ke andar JPG images par loop chalata hai. |
+| 11 | `face_image = cv2.imread(..., cv2.IMREAD_GRAYSCALE)` | Face image ko grayscale format me read karta hai. |
+| 13 | `if face_image is None:` | Check karta hai agar image read nahi hui. |
+| 14 | `continue` | Invalid image skip karta hai. |
+| 16 | `faces.append(face_image)` | Face image training list me add karta hai. |
+| 17 | `labels.append(user_id)` | Corresponding user ID labels list me add karta hai. |
+| 19 | `recognizer.train(faces, np.array(labels))` | Model ko face images aur labels se train karta hai. |
+| 20 | `recognizer.write(str(MODEL_PATH))` | Trained model file me save karta hai. |
 
 ---
 
-# Step 4 - Real-time Face Recognition
+# 5. Identify Registered Users
 
-## Topic Explanation
+Registered user wo user hota hai jiska face images dataset me hain aur model us user par trained hai. Jab registered user camera ke saamne aata hai, recognizer user ID predict karta hai. User ID se hum user ka name labels file se find karte hain.
 
-Face Recognition ka matlab detected face ko identify karna. Face Detection sirf face location batata hai. Face Recognition batata hai face kis registered user ka ho sakta hai.
+LBPH recognizer confidence score return karta hai. Lower confidence usually better match hota hai. Is project me `confidence < 70` ko recognized condition maanenge. Real project me threshold test karke adjust hota hai.
 
-Recognition ke liye hum trained LBPH model load karenge. Webcam se face detect karenge. Cropped face recognizer ko denge. Recognizer user ID aur confidence score return karega. Confidence low ho to match better maana jaata hai.
+## Project Build Part 5 - Model and Labels Load Karna
 
-## Is Step Me Hum Kya Build Kar Rahe Hain?
-
-Hum trained model load karenge, labels read karenge, webcam open karenge, faces detect karenge, model se predict karenge, aur recognized user ka name screen par show karenge.
-
-## Recognition Setup Code
+## Practice Code 6 - Load Model and Labels
 
 ```python
-import cv2
-import pandas as pd
-from datetime import datetime
-from pathlib import Path
+labels = {}
 
-TRAINER_DIR = Path("trainer")
-ATTENDANCE_DIR = Path("attendance")
-RESULTS_DIR = Path("results")
-MODEL_PATH = TRAINER_DIR / "face_model.yml"
-LABELS_PATH = TRAINER_DIR / "labels.txt"
-CASCADE_PATH = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+with LABELS_PATH.open("r") as file:
+    for line in file:
+        user_id, user_name = line.strip().split(",", 1)
+        labels[int(user_id)] = user_name
+
+recognizer = cv2.face.LBPHFaceRecognizer_create()
+recognizer.read(str(MODEL_PATH))
+
+face_detector = cv2.CascadeClassifier(CASCADE_PATH)
+camera = cv2.VideoCapture(0)
 ```
 
-## Har Line Detail Explanation
+## Detailed Code Explanation
 
-`import cv2` OpenCV import karta hai for webcam, face detection and recognition.
-
-`import pandas as pd` attendance CSV create karne ke liye Pandas import karta hai.
-
-`from datetime import datetime` current date and time lene ke liye import hota hai.
-
-`from pathlib import Path` file/folder paths manage karne ke liye import hota hai.
-
-`TRAINER_DIR = Path("trainer")` trained model folder ka path store karta hai.
-
-`ATTENDANCE_DIR = Path("attendance")` attendance files save karne wale folder ka path store karta hai.
-
-`RESULTS_DIR = Path("results")` recognition screenshots save karne wale folder ka path store karta hai.
-
-`MODEL_PATH` trained model file ka path hai.
-
-`LABELS_PATH` user ID-name mapping file ka path hai.
-
-`CASCADE_PATH` Haar Cascade face detector XML file ka path hai.
+| Line | Code | Explanation |
+|---|---|---|
+| 1 | `labels = {}` | Empty dictionary create karta hai. Isme user ID aur user name mapping store hogi. |
+| 3 | `with LABELS_PATH.open("r") as file:` | Labels file read mode me open karta hai. |
+| 4 | `for line in file:` | Labels file ki har line read karta hai. |
+| 5 | `user_id, user_name = line.strip().split(",", 1)` | Line ko user ID aur user name me split karta hai. |
+| 6 | `labels[int(user_id)] = user_name` | User ID ko integer me convert karke dictionary me name ke saath store karta hai. |
+| 8 | `recognizer = cv2.face.LBPHFaceRecognizer_create()` | LBPH recognizer object create karta hai. |
+| 9 | `recognizer.read(str(MODEL_PATH))` | Trained model file load karta hai. |
+| 11 | `face_detector = cv2.CascadeClassifier(CASCADE_PATH)` | Face detector load karta hai. |
+| 12 | `camera = cv2.VideoCapture(0)` | Webcam start karta hai. |
 
 ---
 
-# Step 5 - Attendance Marking Basic
+# 6. Real-time Face Detection and Recognition
 
-## Topic Explanation
+Real-time ka matlab live webcam frames par continuously process karna. Webcam continuously frames deta hai. Har frame me face detect hoga, detected face crop hoga, model prediction karega, aur output me recognized user ka name ya Unknown show hoga.
 
-Attendance marking ka matlab recognized user ka ID, name aur time CSV file me save karna. Basic attendance system me agar user recognize ho gaya, to uska attendance row add ho jaata hai.
+## Project Build Part 6 - Live Recognition
 
-Is project me same user ko baar-baar attendance mark hone se bachane ke liye `marked_users` set use karenge. Agar user already marked hai, to dobara row add nahi hogi.
-
-## Attendance Code
-
-```python
-attendance_file = ATTENDANCE_DIR / f"attendance_{datetime.now().date()}.csv"
-marked_users = set()
-
-if user_id not in marked_users:
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    attendance_row = pd.DataFrame(
-        [[user_id, user_name, current_time]],
-        columns=["User ID", "Name", "Time"]
-    )
-    attendance_row.to_csv(
-        attendance_file,
-        mode="a",
-        header=not attendance_file.exists(),
-        index=False
-    )
-    marked_users.add(user_id)
-```
-
-## Har Line Detail Explanation
-
-`attendance_file = ...` current date ke naam se attendance CSV file ka path banata hai.
-
-`datetime.now().date()` aaj ki date return karta hai.
-
-`marked_users = set()` already marked users ko track karne ke liye empty set banata hai.
-
-`if user_id not in marked_users:` check karta hai user ka attendance already marked hai ya nahi.
-
-`current_time = datetime.now().strftime(...)` current date and time formatted string me convert karta hai.
-
-`attendance_row = pd.DataFrame(...)` attendance row ko table format me banata hai.
-
-`[[user_id, user_name, current_time]]` one row ka data hai.
-
-`columns=["User ID", "Name", "Time"]` CSV ke column names define karta hai.
-
-`attendance_row.to_csv(...)` attendance row CSV file me save karta hai.
-
-`mode="a"` append mode hai. Matlab new row existing file ke end me add hogi.
-
-`header=not attendance_file.exists()` agar file first time create ho rahi hai to header add karega, warna header repeat nahi karega.
-
-`index=False` DataFrame ka extra index CSV me save nahi karega.
-
-`marked_users.add(user_id)` user ko marked list me add karta hai taaki same session me duplicate attendance na ho.
-
----
-
-# Step 6 - Save Recognition Results
-
-## Topic Explanation
-
-Recognition result save karna useful hota hai because later hum proof ya log ke roop me screenshot dekh sakte hain. Jab user recognized hota hai, system current frame ko image file me save kar sakta hai.
-
-## Result Saving Code
-
-```python
-result_path = RESULTS_DIR / f"{user_name}_{datetime.now().strftime('%H%M%S')}.jpg"
-cv2.imwrite(str(result_path), frame)
-```
-
-## Har Line Detail Explanation
-
-`result_path = ...` result image ka file path banata hai. File name me user name aur current time use hota hai.
-
-`datetime.now().strftime('%H%M%S')` current hour, minute and second ko string me convert karta hai.
-
-`cv2.imwrite(str(result_path), frame)` current webcam frame ko image file ke form me save karta hai.
-
----
-
-# Step 7 - Complete Real-time Recognition Loop
-
-## Topic Explanation
-
-Ab hum final step samjhenge jahan complete real-time recognition hoti hai. Is step me camera continuously frames read karta hai. Har frame grayscale me convert hota hai. Face detect hota hai. Detected face trained model ko diya jaata hai. Model user ID aur confidence return karta hai. Agar confidence threshold ke andar hai, to user recognized maana jaata hai. Agar confidence high hai, to user unknown maana jaata hai.
-
-Confidence ko simple words me distance score samjho. LBPH recognizer me lower confidence usually better match hota hai. Is project me hum `confidence < 70` ko recognized condition maan rahe hain. Real project me threshold testing ke baad adjust karna padta hai.
-
-## Complete Recognition Loop Code
+## Practice Code 7 - Recognize Face in Real Time
 
 ```python
 while True:
@@ -659,132 +411,117 @@ while True:
         else:
             display_text = "Unknown"
             box_color = (0, 0, 255)
-
-        cv2.rectangle(frame, (x, y), (x + w, y + h), box_color, 2)
-        cv2.putText(
-            frame,
-            display_text,
-            (x, y - 10),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.7,
-            box_color,
-            2
-        )
-
-    cv2.imshow("Face Recognition Attendance", frame)
-
-    if cv2.waitKey(1) & 0xFF == ord("q"):
-        break
 ```
 
-## Har Line Detail Explanation
+## Detailed Code Explanation
 
-`while True:` continuous loop start karta hai. Real-time recognition me camera baar-baar frames deta hai, isliye loop chahiye.
-
-`success, frame = camera.read()` webcam se current frame read karta hai. `success` batata hai frame mila ya nahi. `frame` actual image data hota hai.
-
-`if not success:` check karta hai agar camera frame receive nahi hua. Agar camera permission issue hai ya camera open nahi hua to ye condition true ho sakti hai.
-
-`print("Camera frame not received.")` user ko problem message show karta hai.
-
-`break` loop stop karta hai, kyunki frame ke bina recognition possible nahi.
-
-`gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)` color image ko grayscale me convert karta hai. Face detector grayscale image par kaam karta hai.
-
-`faces = face_detector.detectMultiScale(...)` current frame me faces detect karta hai. Ye method face ke positions return karta hai.
-
-`gray_frame` detector ko input image deta hai.
-
-`scaleFactor=1.2` detector ko different sizes ke faces check karne me help karta hai.
-
-`minNeighbors=5` false detection reduce karne me help karta hai. Higher value stricter detection hoti hai.
-
-`minSize=(80, 80)` minimum face size define karta hai. Isse chhote noise areas face nahi maane jaate.
-
-`for (x, y, w, h) in faces:` detected faces ke coordinates par loop chalata hai. Agar ek frame me multiple faces hain, loop multiple times chalega.
-
-`face_image = gray_frame[y:y + h, x:x + w]` detected face area crop karta hai. Recognition model ko full frame nahi, sirf face image deni hoti hai.
-
-`user_id, confidence = recognizer.predict(face_image)` trained model cropped face ko identify karta hai. Model predicted user ID aur confidence score return karta hai.
-
-`if confidence < 70:` confidence threshold check karta hai. Agar score 70 se kam hai to hum face ko recognized maan rahe hain. Ye threshold project ke testing ke according adjust ho sakta hai.
-
-`user_name = labels.get(user_id, "Unknown")` predicted user ID se user name find karta hai. Agar ID labels file me nahi milti to Unknown show karega.
-
-`display_text = f"{user_name} ({round(confidence, 2)})"` screen par show hone wala text banata hai. Isme user name aur confidence score dono show hote hain.
-
-`box_color = (0, 255, 0)` green color set karta hai. Green ka meaning recognized user.
-
-`else:` agar confidence threshold ke andar nahi hai to unknown condition chalegi.
-
-`display_text = "Unknown"` unknown user ke liye display text set karta hai.
-
-`box_color = (0, 0, 255)` red color set karta hai. Red ka meaning unknown face.
-
-`cv2.rectangle(...)` detected face ke around rectangle draw karta hai. Recognized user ke liye green box aur unknown ke liye red box dikhega.
-
-`cv2.putText(...)` rectangle ke upar user name ya Unknown text draw karta hai.
-
-`frame` image hai jisme text draw hoga.
-
-`display_text` wo text hai jo screen par show hoga.
-
-`(x, y - 10)` text ka position hai. Ye face rectangle ke thoda upar text dikhata hai.
-
-`cv2.FONT_HERSHEY_SIMPLEX` text font style define karta hai.
-
-`0.7` font size set karta hai.
-
-`box_color` text ka color same as rectangle rakhta hai.
-
-`2` text thickness define karta hai.
-
-`cv2.imshow("Face Recognition Attendance", frame)` final frame window me show karta hai.
-
-`if cv2.waitKey(1) & 0xFF == ord("q"):` keyboard input check karta hai. Agar user `q` press kare to program stop hoga.
-
-`break` loop stop karta hai.
-
-## Cleanup Code
-
-```python
-camera.release()
-cv2.destroyAllWindows()
-
-print("Recognition stopped.")
-print(f"Attendance saved at: {attendance_file}")
-```
-
-## Har Line Detail Explanation
-
-`camera.release()` webcam resource release karta hai. Agar ye line nahi likhenge to camera background me busy reh sakta hai.
-
-`cv2.destroyAllWindows()` OpenCV windows close karta hai.
-
-`print("Recognition stopped.")` user ko message deta hai ki recognition process stop ho gaya.
-
-`print(f"Attendance saved at: {attendance_file}")` attendance CSV file ka path print karta hai, taaki user ko pata chale attendance kaha save hui.
+| Line | Code | Explanation |
+|---|---|---|
+| 1 | `while True:` | Continuous webcam loop start karta hai. |
+| 2 | `success, frame = camera.read()` | Camera se current frame read karta hai. |
+| 4 | `if not success:` | Check karta hai frame mila ya nahi. |
+| 5 | `print(...)` | Agar frame nahi mila to message print karta hai. |
+| 6 | `break` | Loop stop karta hai. |
+| 8 | `gray_frame = cv2.cvtColor(...)` | Frame ko grayscale me convert karta hai. |
+| 9 | `faces = face_detector.detectMultiScale(...)` | Frame me faces detect karta hai. |
+| 17 | `for (x, y, w, h) in faces:` | Har detected face ke coordinates par loop chalata hai. |
+| 18 | `face_image = gray_frame[y:y + h, x:x + w]` | Detected face crop karta hai. |
+| 19 | `user_id, confidence = recognizer.predict(face_image)` | Model cropped face ko predict karta hai aur user ID + confidence return karta hai. |
+| 21 | `if confidence < 70:` | Confidence threshold check karta hai. Lower confidence better match maana jaata hai. |
+| 22 | `user_name = labels.get(user_id, "Unknown")` | User ID se name find karta hai. Agar name nahi milta to Unknown. |
+| 23 | `display_text = ...` | Screen par show hone wala text create karta hai. |
+| 24 | `box_color = (0, 255, 0)` | Recognized face ke liye green color set karta hai. |
+| 25 | `else:` | Agar confidence threshold pass nahi hua to unknown condition chalegi. |
+| 26 | `display_text = "Unknown"` | Unknown face ke liye text set karta hai. |
+| 27 | `box_color = (0, 0, 255)` | Unknown face ke liye red color set karta hai. |
 
 ---
 
-# Final Project Flow
+# 7. Attendance Marking Basic
 
-Project ko run karne ka flow ye hoga:
+Attendance marking ka matlab recognized user ka record CSV file me save karna. Hum user ID, name, aur current time save karenge. Same session me duplicate attendance avoid karne ke liye `marked_users` set use hoga.
+
+## Project Build Part 7 - Attendance Save Karna
+
+## Practice Code 8 - Mark Attendance
+
+```python
+attendance_file = ATTENDANCE_DIR / f"attendance_{datetime.now().date()}.csv"
+marked_users = set()
+
+if user_id not in marked_users:
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    attendance_row = pd.DataFrame(
+        [[user_id, user_name, current_time]],
+        columns=["User ID", "Name", "Time"]
+    )
+    attendance_row.to_csv(
+        attendance_file,
+        mode="a",
+        header=not attendance_file.exists(),
+        index=False
+    )
+    marked_users.add(user_id)
+```
+
+## Detailed Code Explanation
+
+| Line | Code | Explanation |
+|---|---|---|
+| 1 | `attendance_file = ...` | Current date ke naam se attendance CSV file path banata hai. |
+| 2 | `marked_users = set()` | Already marked users ko store karne ke liye set banata hai. |
+| 4 | `if user_id not in marked_users:` | Check karta hai user ki attendance already marked hai ya nahi. |
+| 5 | `current_time = datetime.now().strftime(...)` | Current date and time readable format me convert karta hai. |
+| 6 | `attendance_row = pd.DataFrame(...)` | Attendance row ko table/DataFrame form me banata hai. |
+| 7 | `[[user_id, user_name, current_time]]` | One row ka actual attendance data hai. |
+| 8 | `columns=[...]` | CSV ke column names define karta hai. |
+| 10 | `attendance_row.to_csv(...)` | Attendance row ko CSV file me save karta hai. |
+| 12 | `mode="a"` | Append mode use karta hai, taaki new row file ke end me add ho. |
+| 13 | `header=not attendance_file.exists()` | Agar file first time ban rahi hai to header add hoga, warna repeat nahi hoga. |
+| 14 | `index=False` | Extra DataFrame index CSV me save nahi hota. |
+| 16 | `marked_users.add(user_id)` | User ko marked list me add karta hai taaki duplicate attendance na ho. |
+
+---
+
+# 8. Save Recognition Results
+
+Recognition results save karna useful hota hai because later proof ke form me screenshot dekha ja sakta hai. Jab registered user recognize hota hai, system current webcam frame ko image file ke form me `results/` folder me save kar sakta hai.
+
+## Project Build Part 8 - Recognition Screenshot Save Karna
+
+## Practice Code 9 - Save Result Image
+
+```python
+result_path = RESULTS_DIR / f"{user_name}_{datetime.now().strftime('%H%M%S')}.jpg"
+cv2.imwrite(str(result_path), frame)
+```
+
+## Detailed Code Explanation
+
+| Line | Code | Explanation |
+|---|---|---|
+| 1 | `result_path = ...` | Result image ka file path create karta hai. File name me user name aur current time include hota hai. |
+| 1 | `datetime.now().strftime('%H%M%S')` | Current hour, minute, second ko string me convert karta hai. Isse file name unique banta hai. |
+| 2 | `cv2.imwrite(str(result_path), frame)` | Current webcam frame ko image file ke form me save karta hai. |
+
+---
+
+# Final Complete Project Flow
+
+Project ko build karne ka correct order:
 
 1. `python3 src/01_capture_images.py`
 2. User ID aur name enter karo.
-3. Webcam se 50 face images capture karo.
+3. Webcam se face images capture karo.
 4. `python3 src/02_train_model.py`
-5. Captured images se face model train karo.
+5. Captured images se model train karo.
 6. `python3 src/03_recognize_and_attendance.py`
 7. Webcam me registered user ko identify karo.
-8. Attendance CSV me save hogi.
+8. Attendance CSV file me save hogi.
 9. Recognition screenshot `results/` folder me save hoga.
 
----
+## Final Summary
 
-# Final Classroom Summary
+Is project me students ne topic by topic Face Recognition System build kiya. Pehle Face Detection using OpenCV samjha, phir webcam se images capture ki, phir Machine Learning model train kiya, phir registered users identify kiye, phir real-time recognition kiya, attendance mark ki, aur recognition result save kiya.
 
-Is project me students ne Face Recognition System ka complete practical flow samjha. Pehle face detection samjha, phir webcam se images capture ki, phir captured images se model train kiya, phir trained model se real-time recognition kiya, phir attendance mark ki aur recognition result save kiya.
-
-Important learning ye hai ki Face Recognition project multiple small steps ka combination hai. Agar detection strong nahi hai, capture weak hoga. Agar capture weak hoga, training weak hogi. Agar training weak hogi, recognition weak hoga. Isliye har step ko carefully build karna zaroori hai.
+Teacher speaking flow: "Students, ab aapne dekha ki Face Recognition project ek single code file ka naam nahi hai. Ye multiple small steps ka combination hai. Detection, data collection, training, recognition, attendance, and result saving sab connected hain. Agar aap ye flow samajh gaye, to aap real-world Computer Vision projects ka foundation samajh gaye."
