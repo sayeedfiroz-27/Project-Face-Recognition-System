@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Face Recognition System Project</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f6f7fb;
+      color: #182033;
+      line-height: 1.75;
+    }
+    header {
+      background: #111827;
+      color: white;
+      padding: 34px 8%;
+    }
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+    section {
+      background: white;
+      border: 1px solid #d9e0ec;
+      border-radius: 8px;
+      padding: 24px;
+      margin: 18px 0;
+    }
+    code {
+      background: #edf1f7;
+      color: #182033;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    pre {
+      background: #101827;
+      color: #f8fbff;
+      padding: 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    pre code {
+      background: transparent;
+      color: #f8fbff;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Face Recognition System Project</h1>
+    <p>Step-by-step classroom project using Python, OpenCV, Machine Learning, Webcam Capture, Recognition, Attendance and Result Saving.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Project Purpose</h2>
+      <p>Is project ka purpose students ko real-world computer vision workflow samjhana hai. Hum face detect karenge, webcam se images capture karenge, model train karenge, registered users ko identify karenge, attendance mark karenge aur results save karenge.</p>
+      <p>Full detailed notes with every topic, code and line-by-line explanation are available in <code>face_recognition_system_notes.md</code>.</p>
+    </section>
+    <section>
+      <h2>Install</h2>
+      <pre><code>python3 -m pip install -r requirements.txt</code></pre>
+    </section>
+    <section>
+      <h2>Run Step by Step</h2>
+      <pre><code>python3 src/01_capture_images.py
+python3 src/02_train_model.py
+python3 src/03_recognize_and_attendance.py</code></pre>
+    </section>
+    <section>
+      <h2>Project Files</h2>
+      <p><code>src/01_capture_images.py</code> captures user face images from webcam.</p>
+      <p><code>src/02_train_model.py</code> trains the LBPH face recognition model.</p>
+      <p><code>src/03_recognize_and_attendance.py</code> recognizes registered users and marks attendance.</p>
+    </section>
+  </main>
+</body>
+</html>
