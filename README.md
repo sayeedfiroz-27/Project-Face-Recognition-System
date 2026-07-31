@@ -15,9 +15,27 @@ This project teaches a complete beginner-friendly Face Recognition System using 
 
 ## Install
 
+Install all required modules:
+
 ```bash
 python3 -m pip install -r requirements.txt
 ```
+
+Or install modules one by one:
+
+```bash
+python3 -m pip install opencv-contrib-python
+python3 -m pip install numpy
+python3 -m pip install pandas
+```
+
+Check installation:
+
+```bash
+python3 -c "import cv2, numpy, pandas; print('All modules installed successfully')"
+```
+
+Important: this project uses `opencv-contrib-python` because LBPH face recognition needs the `cv2.face` module.
 
 ## Run Step by Step
 
